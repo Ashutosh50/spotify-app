@@ -3,6 +3,7 @@ import './App.css';
 import Login from './Components/Login';
 import { useStateProvider } from './Utils/StateProvider';
 import { reducerCases } from './Utils/Constants';
+import Spotify from './Components/Spotify';
 
 function App() {
   const [{ token }, dispatch] = useStateProvider();
@@ -16,11 +17,7 @@ function App() {
     }
     document.title = "Spotify";
   }, [dispatch, token]);
-  return (
-    <div className="App">
-        <Login/>
-    </div>
-  );
+  return <div>{token ? <Spotify /> : <Login />}</div>;
 }
 
 export default App;
