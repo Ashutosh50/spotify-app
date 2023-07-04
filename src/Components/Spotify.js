@@ -6,19 +6,29 @@ import Navbar from './Navbar'
 import Footer from './Footer'
 import { useStateProvider } from '../Utils/StateProvider'
 import axios from 'axios'
+import { reducerCases } from '../Utils/Constants'
 const Spotify = () => {
-  const [{token},dispatch]=useStateProvider()
-  useEffect=(()=>{
-    const getUserinfo = async ()=>{
-      const { data } = await axios.get("https://api.spotify.com/v1/me",
-      {
+  const [{token},dispatch]=useStateProvider();
+  useEffect(() => {
+    const getUserInfo = async () => {
+      const  { data } = await axios.get("https://api.spotify.com/v1/me", {
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
         },
-      })
-    }
-  },[token,dispatch])
+      });
+      // console.log(data)
+      const userInfo = {
+        userId: data.id,
+        // userUrl: data.external_urls.spotify,
+        name: data.display_name,
+        image:data.images[0].url
+      };
+       console.log(userInfo)
+      dispatch({ type: reducerCases.SET_USER, userInfo });
+    };
+    getUserInfo();
+  }, [dispatch, token]);
 
   return (
     <Container>
@@ -38,7 +48,7 @@ const Spotify = () => {
   )
 }
  
-export default Spotify
+export default Spotify;
 
 const Container =styled.div`
 max-width: 100vw;
