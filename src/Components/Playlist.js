@@ -23,7 +23,7 @@ const Playlist = () => {
             const playlists = items.map(({ name, id }) => {
               return { name, id };
             });
-            dispatch({ type: reducerCases.SET_PLAYLISTS, playlists });
+            dispatch({ type: reducerCases.SHOW_PLAYLISTS, playlists });
           };
           getPlaylistData();
     },[token,dispatch])

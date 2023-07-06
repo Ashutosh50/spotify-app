@@ -5,7 +5,7 @@ import { FaSearch } from "react-icons/fa";
 import { Avatar } from '@mui/material';
 const Navbar = () => {
   const [{ userInfo }] = useStateProvider();
-  console.log({userInfo},"from navbar");
+  // console.log({userInfo},"from navbar");
   return (
     <Container>
       <div className="search__bar">
@@ -60,6 +60,7 @@ background-color:none;
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
   a {
     display: flex;
     justify-content: center;

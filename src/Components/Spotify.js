@@ -24,7 +24,7 @@ const Spotify = () => {
         name: data.display_name,
         image:data.images[0].url
       };
-       console.log(userInfo)
+      //  console.log(userInfo)
       dispatch({ type: reducerCases.SET_USER, userInfo });
     };
     getUserInfo();
