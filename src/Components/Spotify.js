@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect ,useRef} from 'react'
 import styled from "styled-components"
 import Sidebar from './Sidebar'
 import Body from './Body'
@@ -9,6 +9,7 @@ import axios from 'axios'
 import { reducerCases } from '../Utils/Constants'
 const Spotify = () => {
   const [{token},dispatch]=useStateProvider();
+  const background=useRef();
   useEffect(() => {
     const getUserInfo = async () => {
       const  { data } = await axios.get("https://api.spotify.com/v1/me", {
