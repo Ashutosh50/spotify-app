@@ -3,11 +3,11 @@ import styled from "styled-components"
 import { useStateProvider } from '../Utils/StateProvider';
 import { FaSearch } from "react-icons/fa";
 import { Avatar } from '@mui/material';
-const Navbar = () => {
+const Navbar = ({navbackground}) => {
   const [{ userInfo }] = useStateProvider();
   // console.log({userInfo},"from navbar");
   return (
-    <Container>
+    <Container navbackground={navbackground}>
       <div className="search__bar">
       <FaSearch/>
         <input type="text" placeholder="Artists, songs, or podcasts" />
@@ -33,7 +33,8 @@ height: 15vh;
 position: sticky;
 top: 0;
 transition: 0.3s ease-in-out;
-background-color:none;
+background-color:${({ navbackground }) =>
+navbackground ? "rgba(0,0,0,0.7)" : "none"};
 
 .search__bar{
   background-color: white;

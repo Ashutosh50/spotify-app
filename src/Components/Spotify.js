@@ -1,4 +1,4 @@
-import React, { useEffect ,useRef} from 'react'
+import React, { useEffect ,useRef, useState} from 'react'
 import styled from "styled-components"
 import Sidebar from './Sidebar'
 import Body from './Body'
@@ -9,7 +9,20 @@ import axios from 'axios'
 import { reducerCases } from '../Utils/Constants'
 const Spotify = () => {
   const [{token},dispatch]=useStateProvider();
-  const background=useRef();
+
+  const bodyref=useRef();
+  const [navbackground, setNavBackground]=useState(false)
+  const [headerbackground, setHeaderBackground]=useState(true)
+
+  const bodyScrolled = () => {
+    bodyref.current.scrollTop >= 30
+      ? setNavBackground(true)
+      : setNavBackground(false);
+    bodyref.current.scrollTop >= 268
+      ? setHeaderBackground(true)
+      : setHeaderBackground(false);
+  };
+
   useEffect(() => {
     const getUserInfo = async () => {
       const  { data } = await axios.get("https://api.spotify.com/v1/me", {
@@ -35,10 +48,10 @@ const Spotify = () => {
     <Container>
         <div className="spotify__body">
             <Sidebar/>
-          <div className="body">
-              <Navbar/>
+          <div className="body" ref={bodyref} onScroll={bodyScrolled}>
+              <Navbar navbackground={navbackground}/>
             <div className="body__content">
-                <Body/>
+                <Body headerbackground={headerbackground}/>
             </div>
           </div>
         </div>
@@ -68,4 +81,13 @@ grid-template-rows: 85vh 15vh;
       height: 100%;
       width: 100%;
       overflow: auto;
+      &::-webkit-scrollbar {
+        width: 0.7rem;
+        max-height: 2rem;
+        &-thumb {
+          background-color: rgba(255, 255, 255, 0.6);
+        }
+      }
+    }
+  }
 `

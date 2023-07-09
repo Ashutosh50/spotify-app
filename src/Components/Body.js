@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useStateProvider } from './../Utils/StateProvider';
 import axios from 'axios';
 import { reducerCases } from '../Utils/Constants';
-const Body = () => {
+const Body = ({headerbackground}) => {
   const [{ token, selectedPlaylist, selectedPlaylistId }, dispatch] = useStateProvider();
 
   useEffect(()=>{
@@ -41,8 +41,15 @@ const Body = () => {
     }
     getInitialPlaylist();
   },[dispatch,token,selectedPlaylistId])
+
+  const msToMinutesAndSeconds = (ms) => {
+    let minutes = Math.floor(ms / 60000);
+    let seconds = ((ms % 60000) / 1000).toFixed(0);
+    return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+  };
+
   return (
-    <Container>
+    <Container headerbackground={headerbackground}>
       {selectedPlaylist && (
         <>
         <div className="playlist">
@@ -108,7 +115,7 @@ const Body = () => {
                         <span>{album}</span>
                       </div>
                       <div className="col">
-                        <span>{(duration)}</span>
+                        <span>{msToMinutesAndSeconds(duration)}</span>
                       </div>
                     </div>
                   );
@@ -160,6 +167,8 @@ const Container =styled.div`
     padding: 1rem 3rem;
     cursor: pointer;
     transition: 0.3s ease-in-out;
+    background-color: ${({ headerbackground }) =>
+    headerbackground ? "#000000dc" : "none"};
   }
   .tracks {
     margin: 0 2rem;

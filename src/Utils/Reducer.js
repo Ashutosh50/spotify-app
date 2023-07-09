@@ -32,6 +32,11 @@ export const initialState = {
                 ...state,
                 selectedPlaylist: action.selectedPlaylist,
               };
+              case reducerCases.SET_PLAYING:
+                return {
+                  ...state,
+                  currentPlaying: action.currentPlaying,
+                };
 
           default:
             return state;
