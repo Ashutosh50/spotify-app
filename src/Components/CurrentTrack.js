@@ -63,7 +63,7 @@ const Container = styled.div`
         cursor:pointer;
         &__track__name {
             color: white;
-            
+             
           }
           &__track__artists {
             color: #b3b3b3;

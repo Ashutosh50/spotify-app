@@ -48,6 +48,46 @@ const Body = ({headerbackground}) => {
     return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
   };
 
+
+  const playTrack = async (
+    id,
+    name,
+    artists,
+    image,
+    context_uri,
+    track_number
+  ) => {
+    const response = await axios.put(
+      `https://api.spotify.com/v1/me/player/play`,
+      {
+        context_uri,
+        offset: {
+          position: track_number - 1,
+        },
+        position_ms: 0,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+    if (response.status === 204) {
+      const currentPlaying = {
+        id,
+        name,
+        artists,
+        image,
+      };
+      dispatch({ type: reducerCases.SET_PLAYING, currentPlaying });
+      dispatch({ type: reducerCases.SET_PLAYER_STATE, playerState: true });
+    } else {
+      dispatch({ type: reducerCases.SET_PLAYER_STATE, playerState: true });
+    }
+  };
+
+
   return (
     <Container headerbackground={headerbackground}>
       {selectedPlaylist && (
@@ -97,6 +137,16 @@ const Body = ({headerbackground}) => {
                     <div
                       className="row"
                       key={id}
+                      onClick={() =>
+                        playTrack(
+                          id,
+                          name,
+                          artists,
+                          image,
+                          context_uri,
+                          track_number
+                        )
+                      }
                       
                     >
                       <div className="col">
